@@ -1,0 +1,18 @@
+if (msg['MSH']['MSH.3.1'] = "PracticeFusion"){
+	msg['PID']['PID.13']['PID.13.1'] = msg['PID']['PID.13']['PID.13.6'].toString()+msg['PID']['PID.13']['PID.13.7'].toString();
+	delete msg['TQ1'];
+}
+
+if (msg['MSH']['MSH.3']['MSH.3.1'] == "PRIMESUITE"){	
+	delete msg['PV1'];
+	for each (obr in msg..OBR){
+		obr['OBR.16']['OBR.16.1'] = obr['OBR.16']['OBR.16.8'].toString();
+		obr['OBR.16']['OBR.16.8'] = "N";
+	}
+
+msg['ORC']['ORC.12']['ORC.12.1'] = msg['OBR']['OBR.16']['OBR.16.1'].toString();
+msg['ORC']['ORC.12']['ORC.12.2'] = msg['OBR']['OBR.16']['OBR.16.2'].toString();
+msg['ORC']['ORC.12']['ORC.12.3'] = msg['OBR']['OBR.16']['OBR.16.3'].toString();
+msg['ORC']['ORC.12']['ORC.12.8'] = msg['OBR']['OBR.16']['OBR.16.8'].toString();
+
+}

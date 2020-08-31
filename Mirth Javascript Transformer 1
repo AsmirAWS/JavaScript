@@ -1,0 +1,4 @@
+if (msg['MSH']['MSH.3.1'] = "PracticeFusion"){
+	msg['PID']['PID.13']['PID.13.1'] = msg['PID']['PID.13']['PID.13.6'].toString()+msg['PID']['PID.13']['PID.13.7'].toString();
+	delete msg['TQ1'];
+}

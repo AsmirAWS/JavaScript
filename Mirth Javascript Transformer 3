@@ -1,0 +1,70 @@
+//read segments into array
+
+var arrString = new Array();
+
+var blnDupes = false;
+
+for each (seg in msg.ORC) {
+
+var blnCheck = false;
+
+  for each (line in arrString) {
+
+          //checks for duplicates on the way through
+          
+         if (line == seg['ORC.3']['ORC.3.1'].toString()) {
+              
+                            blnDupes = true;
+							channelMap.put('DupesFound',blnDupes);
+							blnCheck = true;
+                            continue;      //no need to write duplicate values into the array
+         }
+  }
+
+if (blnCheck == false) {
+
+arrString.push (seg['ORC.3']['ORC.3.1'].toString());   //or whatever segment you need to check
+
+}
+}
+
+channelMap.put('arrString',arrString.toString());
+
+//check for duplicates
+
+if (blnDupes == true) {
+
+
+
+for each (line in arrString) {
+
+var count = 0;
+var i = -1;
+
+ for each (seg in msg..ORC) {
+	
+
+	i++;
+
+    if (line == seg['ORC.3']['ORC.3.1'].toString()) {
+		
+	count++;
+
+//	channelMap.put('LastNTE',line + ' ' + count);
+
+		if (count > 1) {	//ensures that you don't delete the original
+
+			delete msg['ORC'][i];
+			i--;			//you need to decrement the segment counter whenever you delete a segment
+/* Mirth ignores the Set ID in the message and treats repeating segments as an array 
+   The starting index is 0 */
+			
+		
+		}
+
+	}
+}
+
+}
+
+}
